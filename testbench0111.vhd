@@ -5,8 +5,8 @@ use ieee.numeric_std.all;
 entity detector_de_sequencia_tb is
 end detector_de_sequencia_tb;
 
-architecture tb_arch of detector_de_sequencia_tb is
-    -- Component declaration for unit under test
+architecture sequen_tb of detector_de_sequencia_tb is
+    -- declaração
     component detector_de_sequencia
     port (
         clk, rst, entrada: in std_logic;
@@ -14,14 +14,14 @@ architecture tb_arch of detector_de_sequencia_tb is
     );
 end component;
 
-    -- Signals for testbench
+    -- Sinais do tb
 signal clk_tb, rst_tb, entrada_tb: std_logic := '0';
 signal saida_tb: std_logic;
 
-    -- Clock process
+    -- clock
 constant clk_period: time := 10 ns;
 begin
-    -- Instantiate the unit under test
+    
     uut: detector_de_sequencia
     port map (
         clk => clk_tb,
@@ -30,10 +30,10 @@ begin
         saida => saida_tb
     );
 
-    -- Clock generation process
+    -- gerador de clock
     clk_process: process
     begin
-        while now < 1000 ns loop  -- Run for 1000 ns
+        while now < 1000 ns loop
             clk_tb <= '0';
             wait for clk_period / 2;
             clk_tb <= '1';
@@ -42,10 +42,9 @@ begin
         wait;
     end process;
 
-    -- Stimulus process
     stimulus_process: process
     begin
-        -- Test case 1: Detect sequence '0111'
+        --Teste para detectar o 0111
         rst_tb <= '1';
         entrada_tb <= '0';
         wait for 20 ns;
@@ -54,29 +53,89 @@ begin
 
         entrada_tb <= '0';  -- S0
         wait for 10 ns;
-        entrada_tb <= '1';  -- S0 to S1
+        entrada_tb <= '1';  -- S0 para S1
         wait for 10 ns;
         entrada_tb <= '1';  -- S1
         wait for 10 ns;
-        entrada_tb <= '1';  -- S1 to S2
+        entrada_tb <= '1';  -- S1 para S2
         wait for 10 ns;
-        entrada_tb <= '1';  -- S2 to S3 (output should be '1')
+        entrada_tb <= '1';  -- S2 para S3 (saida'1')
         wait for 10 ns;
-        entrada_tb <= '0';  -- S3 (reset condition)
+        entrada_tb <= '0';  -- S3 (reset)
         wait for 10 ns;
         entrada_tb <= '0';  -- S0
         wait for 10 ns;
-        entrada_tb <= '1';  -- S0 to S1
+        entrada_tb <= '1';  -- S0 para S1
         wait for 10 ns;
         entrada_tb <= '1';  -- S1
         wait for 10 ns;
-        entrada_tb <= '1';  -- S1 to S2
+        entrada_tb <= '1';  -- S1 para S2
         wait for 10 ns;
-        entrada_tb <= '1';  -- S2 to S3 (output should be '1')
+        entrada_tb <= '1';  -- S2 para S3 (saida'1')
+        wait for 10 ns;
+        
+         --Teste para detectar o padrão 1001
+        rst_tb <= '1';
+        entrada_tb <= '0';
+        wait for 20 ns;
+        rst_tb <= '0';
         wait for 10 ns;
 
-        -- End of test
+        entrada_tb <= '1';  -- S0
+        wait for 10 ns;
+        entrada_tb <= '0';  -- S0 para S1
+        wait for 10 ns;
+        entrada_tb <= '0';  -- S1
+        wait for 10 ns;
+        entrada_tb <= '0';  -- S1 para S2
+        wait for 10 ns;
+        entrada_tb <= '1';  -- S2 para S3
+        wait for 10 ns;
+        entrada_tb <= '0';  -- S3 (reset)
+        wait for 10 ns;
+        entrada_tb <= '1';  -- S0
+        wait for 10 ns;
+        entrada_tb <= '0';  -- S0 para S1
+        wait for 10 ns;
+        entrada_tb <= '0';  -- S1
+        wait for 10 ns;
+        entrada_tb <= '0';  -- S1 para S2
+        wait for 10 ns;
+        entrada_tb <= '1';  -- S2 para S3
+        wait for 10 ns;
+        
+        --Teste para detectar o padrão 1100
+        rst_tb <= '1';
+        entrada_tb <= '0';
+        wait for 20 ns;
+        rst_tb <= '0';
+        wait for 10 ns;
+
+        entrada_tb <= '1';  -- S0
+        wait for 10 ns;
+        entrada_tb <= '1';  -- S0 para S1
+        wait for 10 ns;
+        entrada_tb <= '0';  -- S1
+        wait for 10 ns;
+        entrada_tb <= '0';  -- S1 para S2
+        wait for 10 ns;
+        entrada_tb <= '0';  -- S2 para S3 (saida '1')
+        wait for 10 ns;
+        entrada_tb <= '0';  -- S3 (reset)
+        wait for 10 ns;
+        entrada_tb <= '1';  -- S0
+        wait for 10 ns;
+        entrada_tb <= '1';  -- S0 para S1
+        wait for 10 ns;
+        entrada_tb <= '0';  -- S1
+        wait for 10 ns;
+        entrada_tb <= '0';  -- S1 para S2
+        wait for 10 ns;
+        entrada_tb <= '0';  -- S2 para S3 (saida '1')
+        wait for 10 ns;
+
+
         wait;
     end process;
 
-end tb_arch;
+end sequen_tb;
