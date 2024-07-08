@@ -17,7 +17,7 @@ begin
         if rst = '1' then
             saida <= '0';
             EA <= S0;
-        elsif rising_edge(clk) then
+        elsif clk'event and clk = '1' then
             case EA is
                 when S0 =>
                     if entrada = '0' then
@@ -29,14 +29,18 @@ begin
                     end if;
                 when S1 =>
                     if entrada = '1' then
+                        saida <= '0';
                         EA <= S2;
                     else
+                        saida <= '0';
                         EA <= S1;
                     end if;
                 when S2 =>
                     if entrada = '1' then
+                        saida <= '0';
                         EA <= S3;
                     else
+                        saida <= '0';
                         EA <= S2;
                     end if;
                 when S3 =>
