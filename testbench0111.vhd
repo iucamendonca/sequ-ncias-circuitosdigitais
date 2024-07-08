@@ -22,7 +22,7 @@ signal saida_tb: std_logic;
 constant clk_period: time := 10 ns;
 begin
     
-    uut: detector_de_sequencia
+    fsm: entity work.detector_de_sequencia
     port map (
         clk => clk_tb,
         rst => rst_tb,
@@ -42,7 +42,7 @@ begin
         wait;
     end process;
 
-    stimulus_process: process
+    process
     begin
         --Teste para detectar o 0111
         rst_tb <= '1';
@@ -119,7 +119,7 @@ begin
         wait for 10 ns;
         entrada_tb <= '0';  -- S1 para S2
         wait for 10 ns;
-        entrada_tb <= '0';  -- S2 para S3 (saida '1')
+        entrada_tb <= '0';  -- S2 para S3
         wait for 10 ns;
         entrada_tb <= '0';  -- S3 (reset)
         wait for 10 ns;
@@ -131,7 +131,7 @@ begin
         wait for 10 ns;
         entrada_tb <= '0';  -- S1 para S2
         wait for 10 ns;
-        entrada_tb <= '0';  -- S2 para S3 (saida '1')
+        entrada_tb <= '0';  -- S2 para S3
         wait for 10 ns;
 
 
